@@ -158,12 +158,7 @@ class _HomePageState extends State<HomePage> {
                                   validateUser();
                                 }
                                 else {
-                                  Fluttertoast.showToast(
-                                      msg: "Please fill both the fields!",
-                                      gravity: ToastGravity.BOTTOM,
-                                      backgroundColor: Colors.black,
-                                      textColor: Colors.white
-                                  );
+                                  showToast('Please fill both the fields!');
                                 }
                               },
                               child: Text(
@@ -195,27 +190,16 @@ class _HomePageState extends State<HomePage> {
     Response response = await get("http://165.22.14.77:8080/Narsi/ChatRoom/register.jsp?username=" + username + "&password=" + password);
     String responseFromServer = response.body.trim();
     if (responseFromServer == 'Logged') {
-      Fluttertoast.showToast(
-          msg: "Login successful!",
-          gravity: ToastGravity.BOTTOM
-      );
+      showToast('Login successful!');
       openChatWindow(username);
     }
     else if (responseFromServer == 'Registered') {
+      showToast('Registration successful!');
       String username = txtUsername.text;
-      Fluttertoast.showToast(
-          msg: 'Registration successful!',
-          gravity: ToastGravity.BOTTOM
-      );
       openChatWindow(username);
     }
     else if (responseFromServer == 'Invalid') {
-      Fluttertoast.showToast(
-          msg: "Invalid credentials!",
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.black,
-          textColor: Colors.white
-      );
+      showToast('Invalid credentials!');
     }
   }
   void openChatWindow(String username) {
@@ -224,6 +208,14 @@ class _HomePageState extends State<HomePage> {
         MaterialPageRoute(
             builder: (context) => ChatWindow(username: username)
         )
+    );
+  }
+  void showToast(String message) {
+    Fluttertoast.showToast(
+        msg: message,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.black,
+        textColor: Colors.white
     );
   }
 }
