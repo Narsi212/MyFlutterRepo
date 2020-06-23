@@ -52,7 +52,7 @@ class _ChatWindow extends State<ChatWindow> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.purple[200],
+      backgroundColor: Colors.blueGrey[200],
       body: SingleChildScrollView(
         reverse: true,
         child: ConstrainedBox(
@@ -199,10 +199,7 @@ class _ChatWindow extends State<ChatWindow> {
                                       _sendMessage();
                                     }
                                     else {
-                                      Fluttertoast.showToast(
-                                          msg: "Type your message to send!",
-                                          gravity: ToastGravity.BOTTOM
-                                      );
+                                      showToast('Type your message to send!');
                                     }
                                   },
                                   icon: Icon(Icons.send, color: Colors.blue, size: 35.0,),
@@ -258,12 +255,19 @@ class _ChatWindow extends State<ChatWindow> {
 
   void _signOut(String username) async {
     await http.read("http://165.22.14.77:8080/Narsi/ChatRoom/signOut.jsp?username=" + username);
-    Fluttertoast.showToast(
-        msg: "Bye Bye!",
-        gravity: ToastGravity.BOTTOM
-    );
+    showToast('Bye Bye!');
     setState(() {
       Navigator.pop(context);
     });
   }
+
+  void showToast(String message) {
+    Fluttertoast.showToast(
+        msg: message,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.black,
+        textColor: Colors.white
+    );
+  }
+
 }
